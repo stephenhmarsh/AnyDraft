@@ -5,3 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+test_script_1 = Script.create(title: "Test Script 1")
+test_script_2 = Script.create(title: "Test Script 1")
+authorship_test_1 = Authorship.create(user_id: 1, script_id: test_script_1.id)
+authorship_test_2 = Authorship.create(user_id: 1, script_id: test_script_2.id)

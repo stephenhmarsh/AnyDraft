@@ -1,0 +1,18 @@
+<p><%= @user.email %></p>
+<p>Date Joined: <%=  @user.created_at %></p>
+
+<h2>Scripts</h2>
+<ul>
+	<% @scripts.each do |script| %>
+		<li><%= link_to(script.title, script) %></li>
+	<% end %>
+</ul>
+
+<% if @user == current_user %>
+	<h2>New Script</h2>
+	<%= form_for @script do |f| %>
+		<%= f.label "Title:" %>
+		<%= f.text_field :title %>
+		<%= f.submit :create %>
+	<% end %>
+<% end %>

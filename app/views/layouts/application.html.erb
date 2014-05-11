@@ -8,7 +8,20 @@
 </head>
 <body>
 
-<%= yield %>
+	<h1>AnyDraft</h1>
+
+	<div class="user-auth-links">
+		<% if current_user %>
+			<%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+		<% else %>
+			<%= link_to("Login", new_user_session_path)%>
+		<% end %>
+	</div>
+
+	<p class="notice"><%= notice %></p>
+	<p class="alert"><%= alert %></p>
+
+	<%= yield %>
 
 </body>
 </html>
