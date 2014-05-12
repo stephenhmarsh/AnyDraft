@@ -5,6 +5,7 @@ var AppRouter = Backbone.Router.extend({
 
 	initialize: function(){
 		this.collection = new LineCollection(); // all the lines
+		// this.navigate("");
 	},
 
 	start: function(){
@@ -23,6 +24,10 @@ var AppRouter = Backbone.Router.extend({
 				$('.preview').html(this.scriptPreviewView.el);	
 			}.bind(this)
 		});
-	}
+		this.timer = setInterval(function(){
+			this.collection.fetch();
+			console.log("autofetched");
+		}.bind(this), 1000);
+	},
 
 });

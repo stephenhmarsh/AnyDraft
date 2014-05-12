@@ -10,8 +10,10 @@ var LineListView = Backbone.View.extend({
 			this.addAll();
 		};
 			
-		this.listenTo(this.collection, 'add', this.addOne);
+		this.listenTo(this.collection, 'add', this.addOneManually);
+		this.listenTo(this.collection, 'change', this.addAll);
 		this.listenTo(this.collection, 'reset', this.addAll);
+		// this.listenTo(this.collection, 'change', this.addAll);
 	},
 
 	addTenBlank: function(){
@@ -27,7 +29,15 @@ var LineListView = Backbone.View.extend({
 	addOne: function(lineModel){
 		console.log("Adding one lineInput.")
 		var lineInputView = new LineInputView({model: lineModel});
+		lineInputView.parentView = this;
+		var thingToFocus = lineInputView.$el;
 		lineInputView.$el.appendTo(this.$el);
+		thingToFocus.css("focus", "true");
+		// $().focus();
+	},
+
+	addOneManually: function(lineInputView){
+		console.log("we hit the add one manually manually!!");
 	},
 
 	addAll: function(){

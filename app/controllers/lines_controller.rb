@@ -10,7 +10,7 @@ class LinesController < ApplicationController
 
 	def show
 		@script = Script.find(params[:script_id])
-		@lines = @script.lines.find(params[:id])
+		@lines = @script.lines.find(params[:id]).order('id DESC')
 	end
 
 	def new
