@@ -15,4 +15,13 @@
 //= require turbolinks
 //= require underscore
 //= require backbone
+//= require_tree ./models
+//= require_tree ./collections
+//= require_tree ./views
+//= require router
 //= require_tree .
+
+$(document).ready(function(){
+	var app = new AppRouter();
+	app.start();
+});

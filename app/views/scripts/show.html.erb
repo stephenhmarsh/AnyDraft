@@ -1,5 +1,15 @@
-<h1><%= @script.title %></h1>
-<p> Written By:</p>
-<% @writers.each do |writer| %>
-	<%= link_to(writer.email, writer) %>, 
-<% end %>
+<div class="sixteen columns">
+	<h2><%= @script.title %></h2>
+	<p> Written By:
+	<% @writers.each do |writer| %>
+		<%= link_to(writer.email, writer) %>, 
+	<% end %></p>
+</div>
+
+<div class="six columns editor">
+	<h2>Fountain Editor</h2>
+</div>
+
+<div class="six columns preview">
+	<h2>Preview</h2>
+</div>
