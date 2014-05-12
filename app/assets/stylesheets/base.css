@@ -58,6 +58,13 @@
 		-webkit-text-size-adjust: 100%;
  }
 
+	 .preview {
+		 	font-family: Courier;
+	 }
+
+	 .preview span:hover{
+		 	background-color: lightpink;
+	 }
 
 /* #Typography
 ================================================== */

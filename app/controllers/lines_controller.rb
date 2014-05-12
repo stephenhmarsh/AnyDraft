@@ -1,8 +1,11 @@
 class LinesController < ApplicationController
 
+	respond_to :json
+
 	def index
 		@script = Script.find(params[:script_id])
 		@lines = @script.lines
+		respond_with @lines
 	end
 
 	def show
@@ -15,19 +18,33 @@ class LinesController < ApplicationController
 	end
 
 	def create
+		@user = current_user
 		@script = Script.find(params[:script_id])
-	end
+		@line = Line.new(line_params)
+		@line.user = @user
+		@line.script = @script
 
-	def edit
-		@script = Script.find(params[:script_id])
+		if @line.save!
+			respond_to do |format|
+				format.json {render :show}
+			end
+		end
 	end
 
 	def update
-		@script = Script.find(params[:script_id])
+		@line = Line.find(params[:id])
+		@line.content = params[:content]
+		if @line.save!
+			respond_with @line
+		end
 	end
 
 	def destroy
 		@script = Script.find(params[:script_id])
 	end
 
+	private
+	def line_params
+	params.require(:line).permit(:content, :id)
+	end
 end

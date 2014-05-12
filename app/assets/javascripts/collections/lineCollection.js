@@ -1,5 +1,3 @@
-console.log("LineCollection JS loaded")
-console.log("I think our URL is: " + document.URL + '/lines')
 var LineCollection = Backbone.Collection.extend({
 	url: function(){
 		return document.URL + '/lines'},
@@ -8,4 +6,4 @@ var LineCollection = Backbone.Collection.extend({
 	initialize: function(){
 		console.log("New LineCollection created");
 	}
-});
+}); 

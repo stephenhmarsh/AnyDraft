@@ -5,8 +5,6 @@ var AppRouter = Backbone.Router.extend({
 
 	initialize: function(){
 		this.collection = new LineCollection(); // all the lines
-		this.lineListView = new LineListView({collection: this.collection}); // the list view of line inputs
-		this.scriptPreviewView = new ScriptPreviewView({collection: this.collection}); // the list view of line previews
 	},
 
 	start: function(){
@@ -17,7 +15,10 @@ var AppRouter = Backbone.Router.extend({
 		console.log("scriptBooted")
 		this.collection.fetch({
 			success: function(){
-				console.log("Collection Successfully fetched.");
+				console.log("Collection Successfully fetched. From scriptBoot");
+				this.lineListView = new LineListView({collection: this.collection}); // the list view of line inputs
+				this.scriptPreviewView = new ScriptPreviewView({collection: this.collection}); // the list view of line previews
+
 				$('.editor').html(this.lineListView.el);
 				$('.preview').html(this.scriptPreviewView.el);	
 			}.bind(this)
