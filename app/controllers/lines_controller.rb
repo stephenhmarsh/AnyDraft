@@ -33,8 +33,7 @@ class LinesController < ApplicationController
 
 	def update
 		@line = Line.find(params[:id])
-		@line.content = params[:content]
-		if @line.save!
+		if @line.update(line_params)
 			respond_with @line
 		end
 	end
