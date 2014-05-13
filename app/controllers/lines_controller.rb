@@ -4,13 +4,13 @@ class LinesController < ApplicationController
 
 	def index
 		@script = Script.find(params[:script_id])
-		@lines = @script.lines
+		@lines = @script.lines.sort_by &:id
 		respond_with @lines
 	end
 
 	def show
 		@script = Script.find(params[:script_id])
-		@lines = @script.lines.find(params[:id]).order('id DESC')
+		@lines = @script.lines.find(params[:id])
 	end
 
 	def new
