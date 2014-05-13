@@ -1,14 +1,10 @@
 var LineInputView = Backbone.View.extend({
-	// el: "<div class='line-input' id='" + this.model.get('position') + "'></div>",
-	// el: "<div class='line-input' id=''></div>",
 	tagName: "div",
 	className: "line-input",
 
 	events: {
 		'keyup :input' : 'saveToModel',
 		'keypress :input' : 'addInputBelow',
-		'focusin :input' : 'setFocus',
-		'focusout :input' : 'unsetFocus'
  	},
 
 	initialize: function(){
@@ -30,8 +26,6 @@ var LineInputView = Backbone.View.extend({
 		console.log("what the heck is the line input??? " + this.$('.line-input').attr('id'));
 		var position = this.$('.line-input').attr('id');
 		this.model.set('content', content);
-		// this.model.set('position', )
-		// this.model.set('position', position);
 		this.model.save(); 
 	},
 
@@ -40,19 +34,8 @@ var LineInputView = Backbone.View.extend({
 		if(e.which === 13){
 			var inputModel = new Line();
 			var positionForNewModel = (this.model.get('position') + 1);
-			// console.log("about to add @ position: " + (this.model.get('position') + 1));
 			inputModel.set('position', positionForNewModel);
-			// this.parentView.collection.add(inputModel);
-		
-			this.parentView.addOne(inputModel, positionForNewModel);
+			this.parentView.addOneAfterWithShift(inputModel, positionForNewModel); // i give the view a basically blank model that only has a position set to the line after the one we just hit enter on
 		}
-	},
-	
-	setFocus: function(){
-		console.log("Focus set in text input!!! Which one: " + this.model.get('position'));
-	},
-
-	unsetFocus: function(){
-		console.log("Focus UNSET!!!"  + this.model.get('position'));
-	},
+	}
 });
