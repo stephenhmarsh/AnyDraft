@@ -6,6 +6,7 @@ var AppRouter = Backbone.Router.extend({
 	initialize: function(){
 		this.collection = new LineCollection(); // all the lines
 		// this.navigate("");
+		// this.scriptBoot();
 	},
 
 	start: function(){
