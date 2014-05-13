@@ -45,6 +45,6 @@ class LinesController < ApplicationController
 
 	private
 	def line_params
-	params.require(:line).permit(:content, :id)
+	params.require(:line).permit(:content, :id, :position)
 	end
 end

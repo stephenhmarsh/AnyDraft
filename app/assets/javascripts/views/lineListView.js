@@ -5,35 +5,41 @@ var LineListView = Backbone.View.extend({
 		this.$el.append(heading);
 
 		if (_.isEmpty(this.collection.models)){
-			this.addTenBlank();
+			this.addNewBlank();
 		} else {
 			this.addAll();
 		};
 			
-		this.listenTo(this.collection, 'add', this.addOneManually);
+		// this.listenTo(this.collection, 'add', this.addOneManually);
 		this.listenTo(this.collection, 'change', this.addAll);
 		this.listenTo(this.collection, 'reset', this.addAll);
 		// this.listenTo(this.collection, 'change', this.addAll);
 	},
 
-	addTenBlank: function(){
-		console.log("made it to addTenBlank")
-		for(var i = 0; i < 10; i++){
-			var lineInput = new Line();
-			this.collection.add(lineInput);
-			var lineInputView = new LineInputView({model: lineInput});
-			lineInputView.$el.appendTo(this.$el);
-		};
+	addNewBlank: function(){
+		var lineInput = new Line();
+		lineInput.set('position', 0);
+		lineInput.set('content', "...FADE IN:");
+		this.collection.add(lineInput);
+		var lineInputView = new LineInputView({model: lineInput});
+		lineInputView.$el.appendTo(this.$el);
 	},
 
-	addOne: function(lineModel){
+	// addTenBlank: function(){
+	// 	console.log("made it to addTenBlank")
+	// 	for(var i = 0; i < 10; i++){
+	// 		var lineInput = new Line();
+	// 		this.collection.add(lineInput);
+	// 		var lineInputView = new LineInputView({model: lineInput});
+	// 		lineInputView.$el.appendTo(this.$el);
+	// 	};
+	// },
+
+	addOne: function(lineModel, position){
 		console.log("Adding one lineInput.")
 		var lineInputView = new LineInputView({model: lineModel});
 		lineInputView.parentView = this;
-		var thingToFocus = lineInputView.$el;
-		lineInputView.$el.appendTo(this.$el);
-		thingToFocus.css("focus", "true");
-		// $().focus();
+		lineInputView.$el.appendTo(this.$el);	
 	},
 
 	addOneManually: function(lineInputView){
