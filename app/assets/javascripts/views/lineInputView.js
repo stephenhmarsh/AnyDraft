@@ -6,7 +6,9 @@ var LineInputView = Backbone.View.extend({
 
 	events: {
 		'keyup :input' : 'saveToModel',
-		'keypress :input' : 'addInputBelow'
+		'keypress :input' : 'addInputBelow',
+		'focusin :input' : 'setFocus',
+		'focusout :input' : 'unsetFocus'
  	},
 
 	initialize: function(){
@@ -44,6 +46,13 @@ var LineInputView = Backbone.View.extend({
 		
 			this.parentView.addOne(inputModel, positionForNewModel);
 		}
-	}
+	},
+	
+	setFocus: function(){
+		console.log("Focus set in text input!!! Which one: " + this.model.get('position'));
+	},
 
+	unsetFocus: function(){
+		console.log("Focus UNSET!!!"  + this.model.get('position'));
+	},
 });

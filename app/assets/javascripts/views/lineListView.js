@@ -11,8 +11,10 @@ var LineListView = Backbone.View.extend({
 		};
 			
 		// this.listenTo(this.collection, 'add', this.addOneManually);
-		this.listenTo(this.collection, 'change', this.addAll);
-		this.listenTo(this.collection, 'reset', this.addAll);
+		// this.listenTo(this.collection, 'change', this.addAll);
+		this.listenTo(this.collection, 'change', this.drawAllButCurrent);
+		// this.listenTo(this.collection, 'reset', this.addAll);
+		this.listenTo(this.collection, 'reset', this.drawAllButCurrent);
 		// this.listenTo(this.collection, 'change', this.addAll);
 	},
 
@@ -25,6 +27,7 @@ var LineListView = Backbone.View.extend({
 		lineInputView.$el.appendTo(this.$el);
 	},
 
+	// deprecated but might need to bring it back
 	// addTenBlank: function(){
 	// 	console.log("made it to addTenBlank")
 	// 	for(var i = 0; i < 10; i++){
@@ -42,6 +45,14 @@ var LineListView = Backbone.View.extend({
 		lineInputView.$el.appendTo(this.$el);	
 	},
 
+	addOneAfter: function(lineModel, position){
+		console.log("Adding one lineInput after a sibling.")
+		var lineInputView = new LineInputView({model: lineModel});
+		lineInputView.parentView = this;
+		var whereToAppend = '.line-input#' + (lineModel.get('position') - 1);
+		$(whereToAppend).after(lineInputView.$el);
+	},
+
 	addOneManually: function(lineInputView){
 		console.log("we hit the add one manually manually!!");
 	},
@@ -52,6 +63,19 @@ var LineListView = Backbone.View.extend({
 		var heading = '<h2>Fountain Editor</h2>';
 		this.$el.append(heading);
 		this.collection.each(this.addOne, this)
-	}
+	},
+
+	drawAllButCurrent: function(){
+		this.collection.each(function(line){
+			if(line.hasChanged()){
+				console.log("Change was detected!!!");
+				var linePosition = line.get('position');
+				$('.line-input#' + linePosition).remove();
+				this.addOneAfter(line);
+				} //end if
+			}.bind(this) //end anon each function
+		); //end each
+	}, // end drawAll
+
 
 })
