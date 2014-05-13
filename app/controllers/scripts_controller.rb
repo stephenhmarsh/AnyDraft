@@ -1,5 +1,7 @@
 class ScriptsController < ApplicationController
 
+	before_action :ensure_authorized_writer, only: [:show]
+
 	def index
 	end
 
@@ -32,6 +34,13 @@ class ScriptsController < ApplicationController
 	private
 	def script_params
 		params.require(:script).permit(:title)
+	end
+
+	def ensure_authorized_writer
+		@script = Script.find(params[:id])
+		if !@script.users.include?(current_user)
+			redirect_to root_path
+		end
 	end
 
 end
