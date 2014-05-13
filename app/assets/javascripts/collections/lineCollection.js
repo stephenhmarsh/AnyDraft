@@ -9,11 +9,12 @@ var LineCollection = Backbone.Collection.extend({
 
 	shiftPositions: function(currentPosition, method){
 		if(method == "add"){
-			var linesAbove = this.filter(function(lineModel){return currentPosition < lineModel.get('position')});
+			var linesAbove = this.filter(function(lineModel){return currentPosition <= lineModel.get('position')});
 			console.log(linesAbove);	
 			_.each(linesAbove, function(lineModel){
 				var newPos = lineModel.get('position')+1;
 				lineModel.set('position', newPos);
+				lineModel.save();
 			});
 		} // end if
 	} // end shift Positions function
