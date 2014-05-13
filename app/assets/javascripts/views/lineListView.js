@@ -48,16 +48,12 @@ var LineListView = Backbone.View.extend({
 		var lineInputView = new LineInputView({model: lineModel});
 		lineInputView.parentView = this;
 		var position = lineInputView.model.get('position')
-		// what if i save the model here?//
-		// lineInputView.model.save();
-		//tried it.
+
 		this.collection.shiftPositions(position, "add");
-		//what if i save HERE!??! after i run all dat shit?
-		// TRY IT
+	
 		var previousLinePosition = (position - 1);
 		var whereToAppend = '.line-input#' + previousLinePosition;
 		$(whereToAppend).after(lineInputView.$el);
-		
 	},
 
 	addAll: function(){
