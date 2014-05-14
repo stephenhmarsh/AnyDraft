@@ -23,6 +23,7 @@ class LinesController < ApplicationController
 		@line = Line.new(line_params)
 		@line.user = @user
 		@line.script = @script
+		@line.content_type = @line.fountain_type
 
 		if @line.save!
 			respond_to do |format|
@@ -33,6 +34,8 @@ class LinesController < ApplicationController
 
 	def update
 		@line = Line.find(params[:id])
+		@line.content_type = @line.fountain_type
+		@line.save
 		if @line.update(line_params)
 			respond_with @line
 		end
