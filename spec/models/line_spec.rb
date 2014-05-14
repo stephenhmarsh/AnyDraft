@@ -10,10 +10,12 @@ describe Line do
 
 	before(:each) do
 		@line_0 = Line.create(user: @user_1, script: @script, content: "INT. GA - DAY", position: 0)
-		@line_1 = Line.create(user: @user_1, script: @script, content: "", position: 0)
+		@line_1 = Line.create(user: @user_1, script: @script, content: "", position: 1)
 		@line_2 = Line.create(user: @user_1, script: @script, content: "Some action description.", position: 2)
 		@line_3 = Line.create(user: @user_1, script: @script, content: "STEPHEN", position: 3)
-		@line_4 = Line.create(user: @user_1, script: @script, content: "Dialogue.", position: 4)
+		@line_4 = Line.create(user: @user_1, script: @script, content: "(Writes Tests)", position: 4)
+		@line_5 = Line.create(user: @user_1, script: @script, content: "It's gonna work.", position: 5)
+		@line_6 = Line.create(user: @user_1, script: @script, content: "CUT TO:", position: 6)
 	end
 
 	describe "initialized in before(:each)" do
@@ -29,6 +31,28 @@ describe Line do
 	  it "should correclty recognize and a BLANK LINE" do
 	    expect(@line_1.fountain_type).to eq("blank_line");
 	  end
+	  it "should correclty recognize ACTION" do
+	    expect(@line_2.fountain_type).to eq("action");
+	  end
+	  it "should correclty recognizes a CHARACTER" do
+	    expect(@line_3.fountain_type).to eq("character");
+	  end
+	  it "should correclty recognizes a TRANSITION" do
+	    expect(@line_6.fountain_type).to eq("transition");
+	  end
+	  it "should correclty recognizes a PARANTHETICAL" do
+	  	@line_3.content_type = @line_3.fountain_type
+	  	@line_3.save()
+	    expect(@line_4.fountain_type).to eq("paranthetical");
+	  end
+	  it "should correclty recognizes a DIALOGUE" do
+	  	@line_3.content_type = @line_3.fountain_type
+	  	@line_3.save()
+	  	@line_4.content_type = @line_3.fountain_type
+	  	@line_4.save()
+	    expect(@line_5.fountain_type).to eq("dialogue");
+	  end
+
 	end
 end
 

@@ -20,6 +20,7 @@ var ScriptPreviewView = Backbone.View.extend({
 	addOne: function(lineModel){
 		console.log("Adding one linePreview.")
 		var linePreviewView = new LinePreviewView({model: lineModel});
+		// linePreviewView.addClass(lineModel.get('content_type');
 		linePreviewView.$el.appendTo(this.$el);
 	},
 

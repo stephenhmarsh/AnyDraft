@@ -66,6 +66,16 @@
 		 	background-color: lightpink;
 	 }
 
+	 .character {
+	 	margin-left: 215px;
+	 }
+
+	 .dialogue {
+	 	margin-left: 130px;
+	 }
+
+
+
 /* #Typography
 ================================================== */
 	h1, h2, h3, h4, h5, h6 {
