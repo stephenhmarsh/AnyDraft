@@ -62,10 +62,6 @@
 		 	font-family: Courier;
 	 }
 
-	 .preview span:hover{
-		 	background-color: lightpink;
-	 }
-
 	 .character {
 	 	margin-left: 215px;
 	 }
@@ -73,6 +69,28 @@
 	 .dialogue {
 	 	margin-left: 130px;
 	 }
+
+	 .lightpink:hover{
+	 	background-color: lightpink;
+	 }
+
+	 .lightpink-clicked{
+	 	background-color: lightpink;
+	 }
+
+	 .lightgreen:hover{
+	 	background-color: lightgreen;
+	 }
+
+	 .lightgreen-clicked{
+	 	background-color: lightgreen;
+	 }
+
+	 .lightcyan:hover{
+	 	background-color: lightcyan;
+	 }
+
+	
 
 
 
@@ -114,6 +132,7 @@
 	a, a:visited { color: #333; text-decoration: underline; outline: 0; }
 	a:hover, a:focus { color: #000; }
 	p a, p a:visited { line-height: inherit; }
+
 
 /* #Lists
 ================================================== */
@@ -286,7 +305,8 @@
 	/* #My Classes
 ================================================== */
 .logo-link{}
-	.logo-link a {text-decoration: none}
-
+	.logo-link a {text-decoration: none;}
+.script-title{}
+	.script-title a {text-decoration: none;}
 
 

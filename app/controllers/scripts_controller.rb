@@ -2,15 +2,10 @@ class ScriptsController < ApplicationController
 
 	before_action :ensure_authorized_writer, only: [:show]
 
-	def index
-	end
-
 	def show
 		@script = Script.find(params[:id])
+		@authorships = Authorship.where("script_id = ?", @script.id)
 		@writers = @script.users
-	end
-
-	def new 
 	end
 
 	def create
@@ -23,9 +18,14 @@ class ScriptsController < ApplicationController
 	end
 
 	def edit
+		@script = Script.find(params[:id])
+		@authorship = Authorship.new(script_id: @script.id)
 	end
 
 	def update
+		@script = Script.find(params[:id])
+		@script.update(script_params)
+			redirect_to @script
 	end
 
 	def destroy

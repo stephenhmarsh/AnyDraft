@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   resources :users
   resources :scripts do
     resources :lines
+    resources :authorships
   end
+  
 
   
 

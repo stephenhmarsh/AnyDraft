@@ -27,4 +27,9 @@ class Line < ActiveRecord::Base
 		end
 	end
 
+	def get_user_line_color
+		@authorship = Authorship.where("script_id = ? AND user_id = ?", self.script_id, self.user_id).first!
+		return @authorship.color
+	end
+
 end

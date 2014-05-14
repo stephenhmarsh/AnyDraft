@@ -23,6 +23,8 @@ class LinesController < ApplicationController
 		@line = Line.new(line_params)
 		@line.user = @user
 		@line.script = @script
+
+		@line.user_color = @line.get_user_line_color
 		@line.content_type = @line.fountain_type
 
 		if @line.save!
@@ -33,7 +35,12 @@ class LinesController < ApplicationController
 	end
 
 	def update
+		@user = current_user
 		@line = Line.find(params[:id])
+		@line.user = current_user
+		@line.save
+		@line.user_color = @line.get_user_line_color
+
 		@line.content_type = @line.fountain_type
 		@line.save
 		if @line.update(line_params)

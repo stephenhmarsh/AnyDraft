@@ -1,0 +1,27 @@
+
+<div class="six columns">
+	<h2>Title</h2>
+	<h3 class="script-title"><%= link_to(@script.title, @script) %></h3>
+	<%= form_for @script do |f| %>
+		<%= f.text_field :title %>
+		<%= f.submit :Update %>
+	<% end %>
+</div>
+
+
+<div class="six columns">
+	<h2>Authors</h2>
+	<ul>
+		<% @script.users.each do |user| %>
+			<li><%= link_to(user.email, user)%></li>
+		<% end %>
+	</ul>
+
+	<%= form_tag("/scripts/#{@script.id}/authorships", method: "post") do %>
+		<%= label_tag(:email, "Add a writer by email address:")%>
+		<%= text_field_tag :email %>
+		<%= submit_tag("Add Writer")%>
+	<% end %>
+</div>
+
+

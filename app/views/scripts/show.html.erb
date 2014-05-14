@@ -1,12 +1,14 @@
 <div class="sixteen columns">
-	<h2><%= @script.title %></h2>
-	<p> Written By:
-	<% @writers.each do |writer| %>
-		<%= link_to(writer.email, writer) %>, 
-	<% end %></p>
+	<h2 class="script-title"><%= link_to(@script.title, edit_script_path(@script)) %></h2>
+	<div class="writers">
+		<p> Written By:
+		<% @authorships.each do |writer| %>
+			<span class="<%= writer.color %>"><%= link_to(writer.user.email, writer.user) %></span>, 
+		<% end %></p>
+	</div>
 </div>
 
-<div class="six columns column editor">
+<div class="six columns editor">
 	<h2>Fountain Editor</h2>
 </div>
 
@@ -19,5 +21,6 @@
 </script>
 
 <script type="text/template" id="line-preview-template">
-	<span><%%= content %></span>
+	<span class="<%%=user_color%>"><%%= content %></span>
 </script>
+

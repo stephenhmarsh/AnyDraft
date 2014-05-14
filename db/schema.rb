@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140511032621) do
+ActiveRecord::Schema.define(version: 20140514210750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 20140511032621) do
   create_table "authorships", force: true do |t|
     t.integer "script_id"
     t.integer "user_id"
+    t.string  "color"
+    t.integer "contribution"
   end
 
   create_table "lines", force: true do |t|
@@ -30,6 +32,7 @@ ActiveRecord::Schema.define(version: 20140511032621) do
     t.integer "character_id"
     t.integer "scene_id"
     t.integer "position"
+    t.string  "user_color"
   end
 
   create_table "scripts", force: true do |t|
