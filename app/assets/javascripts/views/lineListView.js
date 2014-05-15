@@ -80,9 +80,9 @@ var LineListView = Backbone.View.extend({
 			if(line.hasChanged()){
 				console.log("Change was detected:");
 				console.log(line.changedAttributes());
-				// var linePosition = line.get('position');
-				// 	if(linePosition != this.activeInputBox){
-				// 		$('.line-input#' + linePosition).remove();
+				var linePosition = line.get('position');
+					if(linePosition != this.activeInputBox){
+						$('.line-input#' + linePosition).remove();
 				// 		this.addOneAtPosition(line, linePosition);
 				// 	}// end nested if
 				} //end if
