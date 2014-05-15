@@ -5,30 +5,43 @@ var LineListView = Backbone.View.extend({
  	},
 	
 	initialize: function(){
-		var heading = '<h2>Fountain Editor</h2>';
-		this.$el.append(heading);
+		// var heading = '<h2>Fountain Editor</h2>';
+		// this.$el.append(heading);
 
-		if (_.isEmpty(this.collection.models)){
-			this.addNewBlank();
-		} else {
+		// if (_.isEmpty(this.collection.models)){
+		// 	this.addNewBlank();
+		// } else {
 			this.addAll();
-		};
+		// };
 
-		this.listenTo(this.collection, 'change', this.drawAllButCurrent);
-		this.listenTo(this.collection, 'reset', this.drawAllButCurrent);
+		// this.listenTo(this.collection, 'change', this.drawAllButCurrent);
+
+		//i shouldn't need this, any reset that has changes will trigger it:
+		// this.listenTo(this.collection, 'reset', this.drawAllButCurrent);
 	},
 
 	addNewBlank: function(){
 		var lineInput = new Line();
-		lineInput.set('position', 0);
-		lineInput.set('content', "...FADE IN:");
+		lineInput.set({
+			position   : 0,
+			content    : "FADE IN:",
+			user_color : "none"
+		});
 		this.collection.add(lineInput);
-		var lineInputView = new LineInputView({model: lineInput});
-		lineInputView.$el.appendTo(this.$el);
+		// I shouldn't need this. the 'change' event of something being added should trigger a redraw:::
+		// var lineInputView = new LineInputView({model: lineInput});
+		// lineInputView.$el.appendTo(this.$el);
 	},
 
-	addOne: function(lineModel, position){
-		console.log("Adding one lineInput.")
+	addAll: function(){
+		console.log("Adding all.");
+		this.$el.empty();
+		var heading = '<h2>Fountain Editor</h2>';
+		this.$el.append(heading);
+		this.collection.each(this.addOne, this)
+	},
+
+	addOne: function(lineModel){
 		var lineInputView = new LineInputView({model: lineModel});
 		lineInputView.parentView = this;
 		lineInputView.$el.appendTo(this.$el);	
@@ -56,14 +69,6 @@ var LineListView = Backbone.View.extend({
 		$(whereToAppend).after(lineInputView.$el);
 	},
 
-	addAll: function(){
-		console.log("Made it to LineList Adding all.");
-		this.$el.empty();
-		var heading = '<h2>Fountain Editor</h2>';
-		this.$el.append(heading);
-		this.collection.each(this.addOne, this)
-	},
-
 	drawAllButCurrent: function(){
 		this.collection.each(function(line){
 			if(line.hasChanged()){
@@ -80,7 +85,7 @@ var LineListView = Backbone.View.extend({
 
 	setFocus: function(){
 		this.activeInputBox = document.activeElement.parentNode.getAttribute('id');
-		console.log("Okay our focus is set to : " + document.activeElement.parentNode.getAttribute('id') + "!!!");
+		console.log("Focus is set to : " + this.activeInputBox);
 	}
 
 })
