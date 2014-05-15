@@ -13,7 +13,9 @@ var AppRouter = Backbone.Router.extend({
 
 	index: function(){
 		//some stuff to make it work
-		console.log("we hit the index function")
+		console.log("we hit the index function");
+		$('.editor').html(this.lineListView.el);
+		$('.preview').html(this.scriptPreviewView.el);
 	}
 
 });

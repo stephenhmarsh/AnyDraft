@@ -5,19 +5,17 @@ var LineListView = Backbone.View.extend({
  	},
 	
 	initialize: function(){
-		// var heading = '<h2>Fountain Editor</h2>';
-		// this.$el.append(heading);
+		this.collection.fetch({
+			success: function(){
+				// if (_.isEmpty(this.collection.models)){
+				// 	this.addNewBlank();
+				// } else {
+				this.addAllByEmpty();
+				// }
+			}.bind(this)
+		})
 
-		// if (_.isEmpty(this.collection.models)){
-		// 	this.addNewBlank();
-		// } else {
-			this.addAll();
-		// };
-
-		// this.listenTo(this.collection, 'change', this.drawAllButCurrent);
-
-		//i shouldn't need this, any reset that has changes will trigger it:
-		// this.listenTo(this.collection, 'reset', this.drawAllButCurrent);
+		this.listenTo(this.collection, 'change', this.drawAllButCurrent);
 	},
 
 	addNewBlank: function(){
@@ -33,51 +31,60 @@ var LineListView = Backbone.View.extend({
 		// lineInputView.$el.appendTo(this.$el);
 	},
 
-	addAll: function(){
+	addAllByEmpty: function(){
 		console.log("Adding all.");
 		this.$el.empty();
-		var heading = '<h2>Fountain Editor</h2>';
+		var heading = '<h2>Fountain Editor Test</h2>';
 		this.$el.append(heading);
-		this.collection.each(this.addOne, this)
+		console.log("whats in the collection?")
+		console.log(this.collection);
+		this.collection.each(this.addOne, this);
 	},
 
 	addOne: function(lineModel){
 		var lineInputView = new LineInputView({model: lineModel});
 		lineInputView.parentView = this;
-		lineInputView.$el.appendTo(this.$el);	
+		lineInputView.$el.appendTo(this.$el)
 	},
 
-	addOneAfter: function(lineModel, position){
-		console.log("Adding one lineInput after a sibling.")
-		var lineInputView = new LineInputView({model: lineModel});
-		lineInputView.parentView = this;
-		var previousLinePosition = (lineModel.get('position') - 1);
-		var whereToAppend = '.line-input#' + previousLinePosition;
-		$(whereToAppend).after(lineInputView.$el);
+	addOneAtPosition: function(lineModel){
+		//do some stuff
 	},
 
-	addOneAfterWithShift: function(lineModel){
-		console.log("Adding one lineInput after a sibling.")
-		var lineInputView = new LineInputView({model: lineModel});
-		lineInputView.parentView = this;
-		var position = lineInputView.model.get('position')
+	addNewOneAtPosition: function(prevPosition){
+		var linesWithPositionsAbove = this.collection.select(function(line){
+			return line.get('position') > prevPosition;
+		});
 
-		this.collection.shiftPositions(position, "add");
-	
-		var previousLinePosition = (position - 1);
-		var whereToAppend = '.line-input#' + previousLinePosition;
-		$(whereToAppend).after(lineInputView.$el);
+		console.log(linesWithPositionsAbove);
+
+		_.each(linesWithPositionsAbove, function(line){
+			line.plusOnePosition();
+		});  // THIS TRIGGERED X NUMBER CHANGE EVENTS. POSSIBLY USE {silent: true}
+		
+		var lineInput = new Line({
+		  content    : "",
+			user_color : "none",
+			position : (prevPosition + 1)
+		});
+
+		this.collection.add(lineInput); // THIS WILL TRIGGER CHANGE EVENT.
+		lineInput.save() // THIS WILL TRIGGER CHANGE EVENT?  *SHOULD INSERT INTO DOM AUTOMATICALLY WITH REDRAW*
+
+		console.log("HERE IS OUR CHANGED COLLLECTION:");
+		console.log(this.collection);
 	},
 
 	drawAllButCurrent: function(){
 		this.collection.each(function(line){
 			if(line.hasChanged()){
-				console.log("Change was detected!!!");
-				var linePosition = line.get('position');
-					if(linePosition != this.activeInputBox){
-						$('.line-input#' + linePosition).remove();
-						this.addOneAfter(line);
-					}// end nested if
+				console.log("Change was detected:");
+				console.log(line.changedAttributes());
+				// var linePosition = line.get('position');
+				// 	if(linePosition != this.activeInputBox){
+				// 		$('.line-input#' + linePosition).remove();
+				// 		this.addOneAtPosition(line, linePosition);
+				// 	}// end nested if
 				} //end if
 			}.bind(this) //end anon each function
 		); //end each

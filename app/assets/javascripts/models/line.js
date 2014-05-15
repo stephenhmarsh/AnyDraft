@@ -8,7 +8,7 @@ var Line = Backbone.Model.extend({
 		var newPos = pos + 1;
 		console.log("Changing position from " + pos + " to: " + newPos);
 		this.set('position', newPos);
-		this.save();
+		this.save(); // SAVES HERE. THIS WILL TRIGGER CHANGE EVENT.  WHICH REDRAWS. NEXT THING HASNT BEEN CHANGED (YET), SO TWO WILL TEMPORARILY HAVE SAME POSITION.
 	},
 
 });
