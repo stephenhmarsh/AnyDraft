@@ -12,11 +12,11 @@ class Line < ActiveRecord::Base
 		end
 		# we now have to do a query
 
-		if self.position < 1
+		if self.position == 0
 			return "scene_heading"
 		end
 		
-		last_line_type = Line.find_by(position: (self.position-1)).content_type
+		last_line_type = Line.find(self.position).content_type
 
 		if last_line_type == "character" || last_line_type == "paranthetical"
 			# last line character?
@@ -35,6 +35,11 @@ class Line < ActiveRecord::Base
 	def get_user_line_color
 		@authorship = Authorship.where("script_id = ? AND user_id = ?", self.script_id, self.user_id).first!
 		return @authorship.color
+	end
+
+	def parents_parent
+		parent = Line.find(self.position)
+		return parent.position
 	end
 
 end

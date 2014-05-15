@@ -8,7 +8,7 @@ var LineInputView = Backbone.View.extend({
  	},
 
 	initialize: function(){
-		this.$el.attr('id', this.model.get('position'));
+		this.$el.attr('id', this.model.get('id'));
 		this.template = _.template($('#line-input-template').html());
 		this.render();
 	},
@@ -26,8 +26,8 @@ var LineInputView = Backbone.View.extend({
 
 	addInputBelow: function(e){
 		if(e.which === 13){
-			var position = this.model.get('position');
-			console.log("you hit enter @ position: " + position);
+			var position = this.model.get('id');
+			console.log("you hit enter @ position (id of self): " + position);
 			this.parentView.addNewOneAtPosition(position);
 		}
 	}

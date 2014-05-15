@@ -10,6 +10,7 @@ var LineListView = Backbone.View.extend({
 				// if (_.isEmpty(this.collection.models)){
 				// 	this.addNewBlank();
 				// } else {
+				// this.addFirstOne();
 				this.addAllByEmpty();
 				// }
 			}.bind(this)
@@ -17,6 +18,16 @@ var LineListView = Backbone.View.extend({
 
 		this.listenTo(this.collection, 'change', this.drawAllButCurrent);
 	},
+
+	// addFirstOne: function(){
+	// 	console.log("whats in the collection")
+	// 	var firstOne = this.collection.find(function(line){
+	// 		line.get('position') == 0;
+	// 	}, this);
+	// 	var lineInputView = new LineInputView({model: firstOne});
+	// 	lineInputView.parentView = this;
+	// 	lineInputView.$el.appendTo(this.$el)
+	// },
 
 	addNewBlank: function(){
 		var lineInput = new Line();
@@ -42,37 +53,27 @@ var LineListView = Backbone.View.extend({
 	},
 
 	addOne: function(lineModel){
-		var lineInputView = new LineInputView({model: lineModel});
-		lineInputView.parentView = this;
-		lineInputView.$el.appendTo(this.$el)
+		if (lineModel.get('position') == 0){
+			var lineInputView = new LineInputView({model: lineModel});
+			lineInputView.parentView = this;
+			lineInputView.$el.prependTo(this.$el)
+		} else {
+			var parent = '#' + lineModel.get('position');
+			var lineInputView = new LineInputView({model: lineModel});
+			lineInputView.parentView = this;
+			lineInputView.$el.insertAfter($(parent));
+		}
 	},
 
-	addOneAtPosition: function(lineModel){
-		//do some stuff
-	},
-
-	addNewOneAtPosition: function(prevPosition){
-		var linesWithPositionsAbove = this.collection.select(function(line){
-			return line.get('position') > prevPosition;
-		});
-
-		console.log(linesWithPositionsAbove);
-
-		_.each(linesWithPositionsAbove, function(line){
-			line.plusOnePosition();
-		});  // THIS TRIGGERED X NUMBER CHANGE EVENTS. POSSIBLY USE {silent: true}
-		
+	addNewOneAtPosition: function(previous){
 		var lineInput = new Line({
 		  content    : "",
 			user_color : "none",
-			position : (prevPosition + 1)
+			position : (previous)
 		});
 
 		this.collection.add(lineInput); // THIS WILL TRIGGER CHANGE EVENT.
-		lineInput.save() // THIS WILL TRIGGER CHANGE EVENT?  *SHOULD INSERT INTO DOM AUTOMATICALLY WITH REDRAW*
-
-		console.log("HERE IS OUR CHANGED COLLLECTION:");
-		console.log(this.collection);
+		lineInput.save(); // THIS WILL TRIGGER CHANGE EVENT?  *SHOULD INSERT INTO DOM AUTOMATICALLY WITH REDRAW*
 	},
 
 	drawAllButCurrent: function(){
@@ -80,11 +81,11 @@ var LineListView = Backbone.View.extend({
 			if(line.hasChanged()){
 				console.log("Change was detected:");
 				console.log(line.changedAttributes());
-				var linePosition = line.get('position');
-					if(linePosition != this.activeInputBox){
-						$('.line-input#' + linePosition).remove();
-				// 		this.addOneAtPosition(line, linePosition);
-				// 	}// end nested if
+				var lineId = line.get('id');
+					if(lineId != this.activeInputBox){
+						$('.line-input#' + lineId).remove();
+						this.addOne(line);
+					}// end nested if
 				} //end if
 			}.bind(this) //end anon each function
 		); //end each

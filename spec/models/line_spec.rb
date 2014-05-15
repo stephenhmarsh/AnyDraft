@@ -9,17 +9,23 @@ describe Line do
 		@authorship = Authorship.create(script: @script, user: @user_1, color: "lightpink")
 		@authorship_2 = Authorship.create(script: @script, user: @user_2, color: "lightgreen")
 		@line_0 = Line.create(user: @user_1, script: @script, content: "INT. GA - DAY", position: 0)
-		@line_1 = Line.create(user: @user_1, script: @script, content: "", position: 1)
-		@line_2 = Line.create(user: @user_2, script: @script, content: "Some action description.", position: 2)
-		@line_3 = Line.create(user: @user_1, script: @script, content: "STEPHEN", position: 3)
-		@line_4 = Line.create(user: @user_1, script: @script, content: "(Writes Tests)", position: 4)
-		@line_5 = Line.create(user: @user_1, script: @script, content: "It's gonna work.", position: 5)
-		@line_6 = Line.create(user: @user_1, script: @script, content: "CUT TO:", position: 6)
+		@line_1 = Line.create(user: @user_1, script: @script, content: "", position: @line_0.id)
+		@line_2 = Line.create(user: @user_2, script: @script, content: "Some action description.", position: @line_1.id)
+		@line_3 = Line.create(user: @user_1, script: @script, content: "STEPHEN", position: @line_2.id)
+		@line_4 = Line.create(user: @user_1, script: @script, content: "(Writes Tests)", position: @line_3.id)
+		@line_5 = Line.create(user: @user_1, script: @script, content: "It's gonna work.", position: @line_4.id)
+		@line_6 = Line.create(user: @user_1, script: @script, content: "CUT TO:", position: @line_5.id)
+		@line_7 = Line.create(user: @user_1, script: @script, content: "CUT TO:", position: @line_6.id)
+		@line_8 = Line.create(user: @user_1, script: @script, content: "CUT TO:", position: @line_7.id)
+
+
+		@line_7.update(position: @line_8.id)
+		@line_8.update(position: @line_6.id)
 	end
 
 	describe "initialized in before(:each)" do
 		it ("has been a position") do
-			expect(@line_2.position).to eq(2)
+			expect(@line_2.position).to eq(@line_1.id)
 		end
 	end
 
@@ -58,6 +64,15 @@ describe Line do
 	  	@line_4.save()
 	    expect(@line_5.fountain_type).to eq("dialogue");
 	  end
+	end
+
+	 describe "parent position mapping" do
+		it ("has a position") do
+			expect(@line_2.position).to eq(@line_1.id)
+		end
+		it ("can find the position of the line before it - aka parent's parent") do
+			expect(@line_8.parents_parent).to eq(@line_5.id)
+		end
 
 	end
 end
