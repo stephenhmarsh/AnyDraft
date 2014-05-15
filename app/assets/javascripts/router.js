@@ -1,19 +1,15 @@
 var AppRouter = Backbone.Router.extend({
-	routes: {
-		"": "scriptBoot"
-	},
+	routes: {"": "scriptBoot"},
 
 	initialize: function(){
 		this.collection = new LineCollection(); // all the lines
-		// this.navigate("");
-		// this.scriptBoot();
 	},
 
 	start: function(){
 		Backbone.history.start();
 	},
 
-	scriptBoot: function(id){
+	scriptBoot: function(){
 		console.log("scriptBooted")
 		this.collection.fetch({
 			success: function(){

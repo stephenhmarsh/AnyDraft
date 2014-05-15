@@ -90,7 +90,25 @@
 	 	background-color: lightcyan;
 	 }
 
-	
+	/* LOGO CLASSES */
+
+	.lightcyan-logo:hover{
+	 	background-color: lightcyan;
+	 }
+
+	.lightpink-logo:hover{
+		background-color: lightpink;
+	}
+
+	.lightgreen-logo:hover{
+		background-color: lightgreen;
+	}
+
+	.underline-logo:hover{
+		text-decoration: underline;
+	}
+
+
 
 
 
@@ -304,9 +322,10 @@
 
 	/* #My Classes
 ================================================== */
-.logo-link{}
-	.logo-link a {text-decoration: none;}
-.script-title{}
-	.script-title a {text-decoration: none;}
+
+.logo-link a {text-decoration: none;}
+
+.script-title a{text-decoration: none;}
+.script-title a:hover{text-decoration: underline;}
 
 

@@ -11,6 +11,11 @@ class Line < ActiveRecord::Base
 			return "character"
 		end
 		# we now have to do a query
+
+		if self.position < 1
+			return "scene_heading"
+		end
+		
 		last_line_type = Line.find_by(position: (self.position-1)).content_type
 
 		if last_line_type == "character" || last_line_type == "paranthetical"
