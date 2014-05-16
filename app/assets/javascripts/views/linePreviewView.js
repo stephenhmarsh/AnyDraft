@@ -11,7 +11,6 @@ var LinePreviewView = Backbone.View.extend({
   },
 	
 	initialize: function(){
-		// console.log("inside linePreviewView init");
 		this.template = _.template($('#line-preview-template').html());
 		this.render();
 	},
@@ -24,8 +23,7 @@ var LinePreviewView = Backbone.View.extend({
 	toggleBackground: function(){
 		var classToToggle = this.model.get('user_color');
 		var selectorToToggle = '.' + classToToggle;
-		// console.log("class to toggle is: " + classToToggle);
-		// console.log("selector to toggle is: " + selectorToToggle);
+	
 		if(this.clicked == true){
 			this.clicked = false;
 			$(selectorToToggle).removeClass(classToToggle + '-clicked'); 
