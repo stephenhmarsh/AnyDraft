@@ -5,7 +5,7 @@ class Line < ActiveRecord::Base
 	def fountain_type
 		if /^(INT|EXT|EST|(I|INT)\\.?\\\/(E|EXT)\\.?)[\\.\\-\\s][^\\n]+$/.match(self.content)
 			return "scene_heading"
-		elsif /[^a-z]*TO:$/.match(self.content)
+		elsif /[^a-z]*(TO|IN):$/.match(self.content)
 			return "transition"
 		elsif /^[^a-z]+(\\(cont'd\\))?$/.match(self.content)
 			return "character"

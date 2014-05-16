@@ -7,12 +7,12 @@ var LineListView = Backbone.View.extend({
 	initialize: function(){
 		this.collection.fetch({
 			success: function(){
-				// if (_.isEmpty(this.collection.models)){
-				// 	this.addNewBlank();
-				// } else {
+				if (_.isEmpty(this.collection.models)){
+					this.addNewBlank();
+				} else {
 				// this.addFirstOne();
 				this.addAllByEmpty();
-				// }
+				}
 			}.bind(this)
 		})
 
@@ -37,6 +37,7 @@ var LineListView = Backbone.View.extend({
 			user_color : "none"
 		});
 		this.collection.add(lineInput);
+		lineInput.save({content_type: "transition"});
 		// I shouldn't need this. the 'change' event of something being added should trigger a redraw:::
 		// var lineInputView = new LineInputView({model: lineInput});
 		// lineInputView.$el.appendTo(this.$el);

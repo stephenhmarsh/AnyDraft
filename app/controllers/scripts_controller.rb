@@ -12,7 +12,7 @@ class ScriptsController < ApplicationController
 		@user = current_user
 		@script = Script.new(script_params)
 		@script.save!
-		authorship = Authorship.new(user_id: @user.id, script_id: @script.id)
+		authorship = Authorship.new(user_id: @user.id, script_id: @script.id, color: "lightpink")
 		authorship.save!
 		redirect_to @script
 	end
