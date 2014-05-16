@@ -1,7 +1,7 @@
 var ScriptPreviewView = Backbone.View.extend({
 
 	initialize: function(){
-		console.log("Made it to ScriptPreviewView initialize");
+		// console.log("Made it to ScriptPreviewView initialize");
 		var heading = '<h2>Preview</h2>';
 		this.$el.append(heading);
 
@@ -18,14 +18,14 @@ var ScriptPreviewView = Backbone.View.extend({
 	},
 
 	addOne: function(lineModel){
-		console.log("Adding one linePreview.")
+		// console.log("Adding one linePreview.")
 		var linePreviewView = new LinePreviewView({model: lineModel});
 		// linePreviewView.addClass(lineModel.get('content_type');
 		linePreviewView.$el.appendTo(this.$el);
 	},
 
 	addAll: function(){
-		console.log("Made it to preview add all")
+		// console.log("Made it to preview add all")
 		this.$el.empty();
 		var heading = '<h2>Preview</h2>';
 		this.$el.append(heading);

@@ -66,14 +66,52 @@ var LineListView = Backbone.View.extend({
 	},
 
 	addNewOneAtPosition: function(previous){
-		var lineInput = new Line({
-		  content    : "",
-			user_color : "none",
-			position : (previous)
+		var previousInputModel = this.collection.find(function(line){ 
+      return Number(line.get('id')) === previous;
 		});
 
-		this.collection.add(lineInput); // THIS WILL TRIGGER CHANGE EVENT.
-		lineInput.save(); // THIS WILL TRIGGER CHANGE EVENT?  *SHOULD INSERT INTO DOM AUTOMATICALLY WITH REDRAW*
+		console.log("okay we're coming from " + previousInputModel.get('id'))
+
+		var oldChild = this.collection.findWhere({position: previous});
+
+		if (previousInputModel.get('position') != 0 && oldChild){
+			console.log("FOR THE LOVE OF ALL THAT IS HOLY IS THERE AN OLD CHILD??")
+			console.log(oldChild.get('id'));
+
+			var oldChild = this.collection.findWhere({position: previous});
+			
+			console.log("Our old child was: " + oldChild.get('id'));
+
+			var lineInput = new Line({
+			  content    : "",
+				user_color : "none",
+				position : (previous)
+			});
+
+			lineInput.save().done(function(){
+				console.log("!!SUPER IMPORTANT !!  new lineInput id IS:")
+				console.log(lineInput.get('id'))
+				var oldChildNewPos = lineInput.get('id');
+				oldChild.set('position', oldChildNewPos);
+				oldChild.save();
+
+				this.collection.add(lineInput); // THIS WILL TRIGGER CHANGE EVENT.
+				lineInput.save();
+			}.bind(this));
+			
+			
+			 // THIS WILL TRIGGER CHANGE EVENT?  *SHOULD INSERT INTO DOM AUTOMATICALLY WITH REDRAW*
+		} else {
+			var lineInput = new Line({
+			  content    : "",
+				user_color : "none",
+				position : (previous)
+			});
+			this.collection.add(lineInput); // THIS WILL TRIGGER CHANGE EVENT.
+			lineInput.save();
+			// THIS WILL TRIGGER CHANGE EVENT?  *SHOULD INSERT INTO DOM AUTOMATICALLY WITH REDRAW*
+			
+		}// end if previousinput model not 0
 	},
 
 	drawAllButCurrent: function(){
