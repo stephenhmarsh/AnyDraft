@@ -1,5 +1,5 @@
 
-<div class="six columns">
+<div class="five columns">
 	<h2>Title</h2>
 	<h3 class="script-title"><%= link_to(@script.title, @script) %></h3>
 	<%= form_for @script do |f| %>
@@ -9,7 +9,7 @@
 </div>
 
 
-<div class="six columns">
+<div class="five columns">
 	<h2>Authors</h2>
 	<ul>
 		<% @script.users.each do |user| %>
@@ -22,6 +22,20 @@
 		<%= text_field_tag :email %>
 		<%= submit_tag("Add Writer")%>
 	<% end %>
+</div>
+
+<div class="five columns">
+	<h2>Colors</h2>
+	<% @authorships.each do |authorship| %>
+
+	<%= authorship.user.email %>
+		<%= form_tag("/scripts/#{authorship.script_id}/authorships/#{authorship.id}", method: "put") do %>
+			<%= label_tag(:color, "Change Text Color")%>
+			<%= select_tag(:color, options_for_select([["Pink", "lightpink"], ["Green", "lightgreen"]])) %>
+			<%= submit_tag("Set Color")%>
+		<% end %>
+	<% end %>
+
 </div>
 
 

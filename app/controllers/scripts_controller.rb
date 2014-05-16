@@ -19,7 +19,7 @@ class ScriptsController < ApplicationController
 
 	def edit
 		@script = Script.find(params[:id])
-		@authorship = Authorship.new(script_id: @script.id)
+		@authorships = Authorship.where("script_id = ?", @script.id)
 	end
 
 	def update

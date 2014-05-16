@@ -45,8 +45,6 @@ var LineListView = Backbone.View.extend({
 	addAllByEmpty: function(){
 		console.log("Adding all.");
 		this.$el.empty();
-		var heading = '<h2>Fountain Editor Test</h2>';
-		this.$el.append(heading);
 		console.log("whats in the collection?")
 		console.log(this.collection);
 		this.collection.each(this.addOne, this);
