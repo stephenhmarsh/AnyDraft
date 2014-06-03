@@ -6,6 +6,7 @@ class ScriptsController < ApplicationController
 		@script = Script.find(params[:id])
 		@authorships = Authorship.where("script_id = ?", @script.id)
 		@writers = @script.users
+		render layout: "script_show"
 	end
 
 	def create

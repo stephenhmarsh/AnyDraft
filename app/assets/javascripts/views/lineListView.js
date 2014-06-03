@@ -10,7 +10,6 @@ var LineListView = Backbone.View.extend({
 				if (_.isEmpty(this.collection.models)){
 					this.addNewBlank();
 				} else {
-				// this.addFirstOne();
 				this.addAllByEmpty();
 				}
 			}.bind(this)
@@ -18,16 +17,6 @@ var LineListView = Backbone.View.extend({
 
 		this.listenTo(this.collection, 'change', this.drawAllButCurrent);
 	},
-
-	// addFirstOne: function(){
-	// 	console.log("whats in the collection")
-	// 	var firstOne = this.collection.find(function(line){
-	// 		line.get('position') == 0;
-	// 	}, this);
-	// 	var lineInputView = new LineInputView({model: firstOne});
-	// 	lineInputView.parentView = this;
-	// 	lineInputView.$el.appendTo(this.$el)
-	// },
 
 	addNewBlank: function(){
 		var lineInput = new Line();
@@ -38,9 +27,6 @@ var LineListView = Backbone.View.extend({
 		});
 		this.collection.add(lineInput);
 		lineInput.save({content_type: "transition"});
-		// I shouldn't need this. the 'change' event of something being added should trigger a redraw:::
-		// var lineInputView = new LineInputView({model: lineInput});
-		// lineInputView.$el.appendTo(this.$el);
 	},
 
 	addAllByEmpty: function(){
