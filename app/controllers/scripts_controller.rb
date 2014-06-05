@@ -2,6 +2,15 @@ class ScriptsController < ApplicationController
 
 	before_action :ensure_authorized_writer, only: [:show]
 
+	def home
+		if user_signed_in?
+			@user = current_user
+			redirect_to @user
+		else
+			render :home
+		end
+	end
+
 	def show
 		@script = Script.find(params[:id])
 		@authorships = Authorship.where("script_id = ?", @script.id)
