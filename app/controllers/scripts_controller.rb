@@ -1,6 +1,6 @@
 class ScriptsController < ApplicationController
 
-	before_action :ensure_authorized_writer, only: [:show]
+	before_action :ensure_authorized_writer, only: [:show, :destroy]
 
 	def home
 		if user_signed_in?
@@ -39,6 +39,11 @@ class ScriptsController < ApplicationController
 	end
 
 	def destroy
+		@script = Script.find(params[:id])
+		@user = current_user
+		if @script.destroy!
+			redirect_to @user
+		end
 	end
 
 	private

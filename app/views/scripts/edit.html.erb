@@ -6,6 +6,11 @@
 		<%= f.text_field :title %>
 		<%= f.submit :Update %>
 	<% end %>
+
+	<h2>Remove Script</h2>
+	<%= form_tag(script_path, method: "delete") do %>
+		<%= submit_tag("Permanently Delete Script")%>
+	<% end %>
 </div>
 
 
