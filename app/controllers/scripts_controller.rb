@@ -7,7 +7,7 @@ class ScriptsController < ApplicationController
 			@user = current_user
 			redirect_to @user
 		else
-			render :home
+			redirect_to new_user_session_path
 		end
 	end
 
