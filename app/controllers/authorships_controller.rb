@@ -1,14 +1,11 @@
 class AuthorshipsController < ApplicationController
 
 	def create
-		if @user = User.find_by(email: params[:email])
-			@script = Script.find(params[:script_id])
-			authorship = Authorship.new(script: @script, user: @user, color: "lightgreen")
-			if authorship.save! 
-				redirect_to edit_script_path(@script)
-			end
-		else
-			#error
+		@user = User.find_by(email: params[:email])
+		@script = Script.find(params[:script_id])
+		authorship = Authorship.new(script: @script, user: @user, color: "lightgreen")
+		if authorship.save! 
+			redirect_to edit_script_path(@script)
 		end
 	end
 

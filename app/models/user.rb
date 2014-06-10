@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
 			total_script_words += writer.calculate_lines_length(script)
 		end
 		given_user_words = self.calculate_lines_length(script)
-		result = (given_user_words.to_f / total_script_words.to_f) * 100.0
+		result = ((given_user_words.to_f / total_script_words.to_f) * 10000.0).round / 100.0
 		return result
 	end
 
