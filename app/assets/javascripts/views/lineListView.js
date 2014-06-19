@@ -60,7 +60,6 @@ var LineListView = Backbone.View.extend({
 		var oldChild = this.collection.findWhere({position: previous});
 
 		if (previousInputModel.get('position') != 0 && oldChild){
-			console.log("FOR THE LOVE OF ALL THAT IS HOLY IS THERE AN OLD CHILD??")
 			console.log(oldChild.get('id'));
 
 			var oldChild = this.collection.findWhere({position: previous});
@@ -74,7 +73,7 @@ var LineListView = Backbone.View.extend({
 			});
 
 			lineInput.save().done(function(){
-				console.log("!!SUPER IMPORTANT !!  new lineInput id IS:")
+				console.log("new lineInput id IS:")
 				console.log(lineInput.get('id'))
 				var oldChildNewPos = lineInput.get('id');
 				oldChild.set('position', oldChildNewPos);
